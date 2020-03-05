@@ -56,11 +56,13 @@ for t in range(T):
     maxDifK = defaultdict(lambda: -9999999)
 
     for (r,c) in empties:
+        summ=r+c
+        diff=r-c
         for k in range(0, g[r][c]):
-            minSumK[k] = min(r+c, minSumK[k])
-            maxSumK[k] = max(r+c, maxSumK[k])
-            minDifK[k] = min(r-c, minDifK[k])
-            maxDifK[k] = max(r-c, maxDifK[k])
+            minSumK[k] = min(summ, minSumK[k])
+            maxSumK[k] = max(summ, maxSumK[k])
+            minDifK[k] = min(diff, minDifK[k])
+            maxDifK[k] = max(diff, maxDifK[k])
     
     minMax = dict()
     for k in range(K):
