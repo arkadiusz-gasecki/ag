@@ -4,7 +4,7 @@ from collections import defaultdict
 def set_distance(grid,w,k,R,C,dst,visited):
     global init_K
     if (w >= 0) and (k >= 0) and (w < R) and (k < C):
-        if (grid[w][k] == None) or (dst < grid[w][k]):
+        if (grid[w][k] == None):
             grid[w][k] = dst
             visited.append((w,k)) 
             
@@ -20,7 +20,7 @@ def bfs(R, C, grid, offices):
     visited = offices.copy()
     
     while len(visited) > 0:
-        elem = visited.pop()
+        elem = visited.pop(0)
         w,k = elem[0],elem[1]
         dst = temp_grid[w][k] + 1
         set_distance(temp_grid,w-1,k,R,C,dst,visited)
