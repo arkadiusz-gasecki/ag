@@ -49,32 +49,30 @@ for t in range(T):
     K = 0
     for (r,c) in empties:
         K = max(K, g[r][c])
-
-    minSumK = defaultdict(lambda: 9999999)
-    maxSumK = defaultdict(lambda: -9999999)
-    minDifK = defaultdict(lambda: 9999999)
-    maxDifK = defaultdict(lambda: -9999999)
-
-    for (r,c) in empties:
-        summ=r+c
-        diff=r-c
-        for k in range(0, g[r][c]):
-            minSumK[k] = min(summ, minSumK[k])
-            maxSumK[k] = max(summ, maxSumK[k])
-            minDifK[k] = min(diff, minDifK[k])
-            maxDifK[k] = max(diff, maxDifK[k])
     
+    SumK = defaultdict(set)
+    DifK = defaultdict(set)
+    
+    for (r,c) in empties:
+        for k in range(0, g[r][c]):
+            SumK[k].add(r+c)
+            DifK[k].add(r-c)
+  
     minMax = dict()
     for k in range(K):
-        rangeSum = maxSumK[k] - minSumK[k]
-        rangeDif = maxDifK[k] - minDifK[k]
+        maxSumK = max(SumK[k])
+        minSumK = min(SumK[k])
+        maxDifK = max(DifK[k])
+        minDifK = min(DifK[k])
+        rangeSum = maxSumK - minSumK
+        rangeDif = maxDifK - minDifK
         s = min(rangeSum , rangeDif)
         b = max(rangeSum , rangeDif)
         
         minMax[k] = b // 2
         if (b % 2 == 1): minMax[k] += 1
-        if (b % 2 == 0) and (b == s) and (((minSumK[k] + minDifK[k]) % 2) == 1):  minMax[k] += 1
-
+        if (b % 2 == 0) and (b == s) and (((minSumK + minDifK) % 2) == 1):  minMax[k] += 1
+  
     if (K == 0):
         print("Case #{}: {}".format(t+1,K))
     else:
