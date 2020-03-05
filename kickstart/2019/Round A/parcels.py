@@ -42,8 +42,7 @@ for t in range(T):
     #determine coordinates of all delivery offices
     for r in range(0,R):
         for c in range(0,C):
-            if grid[r][c] == '1': offices.append((r,c))
-            else: empties.append((r,c))
+            offices.append((r,c)) if grid[r][c] == '1' else empties.append((r,c))
     
     g = bfs(R,C, grid, offices)
     K = 0
