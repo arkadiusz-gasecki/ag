@@ -54,9 +54,10 @@ for t in range(T):
     DifK = defaultdict(set)
     
     for (r,c) in empties:
+        summ, diff = r+c, r-c
         for k in range(0, g[r][c]):
-            SumK[k].add(r+c)
-            DifK[k].add(r-c)
+            SumK[k].add(summ)
+            DifK[k].add(diff)
   
     minMax = dict()
     for k in range(K):
