@@ -1,4 +1,3 @@
-#only test set 1
 from collections import defaultdict
 
 def set_distance(grid,w,k,R,C,dst,visited):
@@ -48,38 +47,41 @@ for t in range(T):
     K = 0
     for (r,c) in empties:
         K = max(K, g[r][c])
+        
+    L = 0
+    R = K
+    last_k = K
     
-    SumK = defaultdict(set)
-    DifK = defaultdict(set)
+    while L < R:
+        k = (L+R) // 2
     
-    for (r,c) in empties:
-        summ, diff = r+c, r-c
-        for k in range(0, g[r][c]):
-            SumK[k].add(summ)
-            DifK[k].add(diff)
-  
-    minMax = dict()
-    for k in range(K):
-        maxSumK = max(SumK[k])
-        minSumK = min(SumK[k])
-        maxDifK = max(DifK[k])
-        minDifK = min(DifK[k])
-        rangeSum = maxSumK - minSumK
-        rangeDif = maxDifK - minDifK
+        minSum = 9999999
+        maxSum = -9999999
+        minDiff = 9999999
+        maxDiff = -9999999
+        for (r,c) in empties:
+            if g[r][c] > k:
+                minSum = min(minSum, r+c)
+                maxSum = max(maxSum, r+c)
+                minDiff = min(minDiff, r-c)
+                maxDiff = max(maxDiff, r-c)
+                
+        rangeSum = maxSum - minSum
+        rangeDif = maxDiff - minDiff
         s = min(rangeSum , rangeDif)
         b = max(rangeSum , rangeDif)
         
-        minMax[k] = b // 2
-        if (b % 2 == 1): minMax[k] += 1
-        if (b % 2 == 0) and (b == s) and (((minSumK + minDifK) % 2) == 1):  minMax[k] += 1
+        minMax = b // 2
+        if (b % 2 == 1): minMax += 1
+        if (b % 2 == 0) and (b == s) and (((minSum + minDiff) % 2) == 1):  minMax += 1
+        
+        if minMax <= k:
+            R=k
+            last_k = k
+        else:
+            L=k+1
   
     if (K == 0):
         print("Case #{}: {}".format(t+1,K))
     else:
-        k_found = False
-        for k,v in minMax.items():
-            if k >= v:
-                print("Case #{}: {}".format(t+1,k))
-                k_found = True
-                break
-        if (k_found == False): print("Case #{}: {}".format(t+1,K))
+        print("Case #{}: {}".format(t+1,last_k))
