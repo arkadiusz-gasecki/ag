@@ -22,7 +22,7 @@ Edges = {
 	#'J': {'D'}
 	}
 
-for src, tgt in Edges.items():
+for src, tgt in Edges.copy().items():
 	for elem in tgt:
 		(Edges[elem].add(src)) if (elem in Edges) else (Edges.update({elem : {src}}))
 
