@@ -1,0 +1,22 @@
+This is simple code inspired by task in Google Hashcode Qualification Round 2016.
+Codes provides simple simulation calculation, based on input data received.
+
+Code saves two files: 
+- result.txt - this would be subject to judge system in hashcode (not executed though)
+- simulation.txt - big matrix where rows are ticks and columns describe activities that drones make
+Additionally, set of information is provided to console.
+
+As mentioned algorithm is simple:
+- drone takes order
+- drone checks if has capacity
+- drone looks for nearest warehouse with a single product that can be taken (i.e. its taking would not exceed drone maximum capacity)
+- in warehouse drone takes as many products as possible, namely:
+  are present in warehouse
+  do not exceed maximum capacity
+  Simple greedy algorithm is used, no special features
+  
+- if there is still capacity, drones looks for new warehouse
+- otherwise drone flies to order location, to deliver products
+
+- if there are still not delivered products in order, these are used to seek for new warehouse (and then repeat furthere steps)
+- otherwise new order is picked up and process starts from the beginning
